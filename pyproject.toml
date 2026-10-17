@@ -1,0 +1,18 @@
+[project]
+name = "os-brick-freebsd"
+version = "0.0.0"
+description = "FreeBSD iSCSI connector for os-brick"
+readme = "README.md"
+authors = [
+    { name = "joshiggins", email = "josh@joshh.info" }
+]
+license = {text = "Apache-2.0"}
+requires-python = ">=3.12"
+dependencies = []
+
+[build-system]
+requires = ["uv_build>=0.11.28"]
+build-backend = "uv_build"
+
+[tool.uv.build-backend]
+module-name = "os_brick_freebsd"
