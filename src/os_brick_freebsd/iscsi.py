@@ -143,7 +143,8 @@ class FreeBSDISCSIConnector(base_iscsi.BaseISCSIConnector):
                 time.sleep(attempt**2)
             session = self._find_session(portal, iqn)
             path = self._device_for(session, lun)
-            if path is not None:
+            # the session lists a probe periph before the da node exists
+            if path is not None and os.path.exists(path):
                 return path
             state = session and session.get('state')
             LOG.debug(

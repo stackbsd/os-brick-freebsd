@@ -87,6 +87,9 @@ class ConnectorTestCase(unittest.TestCase):
         lock = mock.patch('oslo_concurrency.lockutils.lock')
         lock.start()
         self.addCleanup(lock.stop)
+        exists = mock.patch.object(iscsi.os.path, 'exists', return_value=True)
+        self.exists = exists.start()
+        self.addCleanup(exists.stop)
 
     def connector(self, execute):
         """Return a connector using the fake executor."""
@@ -191,6 +194,18 @@ class ConnectTest(ConnectorTestCase):
         execute = FakeExecute(
             listing(),
             listing(session(luns=(), state='Connected')),
+            listing(session()),
+        )
+        info = self.connector(execute).connect_volume(PROPS)
+        self.assertEqual('/dev/da3', info['path'])
+        self.sleep.assert_called_once_with(1)
+
+    def test_waits_for_device_node(self):
+        """The connector polls until the listed device has a node."""
+        self.exists.side_effect = lambda path: path == '/dev/da3'
+        execute = FakeExecute(
+            listing(),
+            listing(session(luns=((0, 'probe0'),))),
             listing(session()),
         )
         info = self.connector(execute).connect_volume(PROPS)
