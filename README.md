@@ -15,7 +15,6 @@ Designed to be used with [cinder-zfs-driver](https://github.com/stackbsd/cinder-
 
 ### Roadmap
 
-- Lookup through the os-brick connector factory on FreeBSD
 - Mutual CHAP
 - Multipath portals
 - NVMe over Fabrics connector
@@ -24,7 +23,7 @@ Designed to be used with [cinder-zfs-driver](https://github.com/stackbsd/cinder-
 
 - Only the first portal of a multipath connection is used
 - Encrypted volumes are not handled
-- Because os-brick's connector factory doesn't look up this driver yet, other tools like cinder-backup or glance's cinder store can't use it 
+- os-brick has a hard coded mapping and does not directly support out-of-tree connectors - the [stackbsd/ports](https://github.com/stackbsd/ports) carry a patch so that cinder-backup and glance-cinder can use this connector too
 
 ## Host requirements
 

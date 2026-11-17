@@ -6,7 +6,9 @@ from unittest import mock
 
 from os_brick import exception
 from oslo_concurrency import processutils
+from oslo_utils import importutils
 
+import os_brick_freebsd
 from os_brick_freebsd import iscsi
 
 PORTAL = '192.0.2.10:3260'
@@ -124,6 +126,17 @@ class RenderTest(unittest.TestCase):
         ]:
             with self.assertRaises(exception.BrickException):
                 iscsi.render_conf(*args)
+
+
+class MappingTest(unittest.TestCase):
+    """Protocol mapping read by the os-brick connector factory."""
+
+    def test_iscsi_maps_to_the_connector(self):
+        """Resolve the ISCSI entry to the FreeBSD connector class."""
+        path = os_brick_freebsd.CONNECTORS['ISCSI']
+        self.assertIs(
+            importutils.import_class(path), iscsi.FreeBSDISCSIConnector
+        )
 
 
 class PropertiesTest(unittest.TestCase):
