@@ -12,6 +12,7 @@ Designed to be used with [cinder-zfs-driver](https://github.com/stackbsd/cinder-
 - CHAP authentication with the secret passed in a private config file
 - Initiator name reported to Cinder that matches what `iscsictl` logs in with
 - Online size refresh with `camcontrol reprobe`
+- Local connector that returns the zvol named by a `zfs_local` connection
 
 ### Roadmap
 
