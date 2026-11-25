@@ -1,7 +1,7 @@
 [project]
 name = "os-brick-freebsd"
 version = "0.0.0"
-description = "FreeBSD iSCSI connector for os-brick"
+description = "FreeBSD connectors for os-brick"
 readme = "README.md"
 authors = [
     { name = "joshiggins", email = "josh@joshh.info" }
